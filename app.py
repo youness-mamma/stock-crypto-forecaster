@@ -5,10 +5,16 @@ from __future__ import annotations
 import time
 import uuid
 
+import pandas as pd
 import streamlit as st
 
 from chart import build_forecast_chart
-from data_fetcher import DataFetchError, fetch_ohlcv, next_timestamps
+from data_fetcher import (
+    DataFetchError,
+    TickerNotFoundError,
+    fetch_ohlcv,
+    next_timestamps,
+)
 from forecaster import (
     ForecastError,
     ensure_kronos_repo,
@@ -126,6 +132,14 @@ def run_forecast(ticker: str) -> None:
         with st.status("Fetching market data…", expanded=False) as status:
             try:
                 history, asset_type = fetch_ohlcv(ticker, limit=HISTORY_CANDLES)
+            except TickerNotFoundError:
+                status.update(label="Ticker not found", state="error")
+                st.error(
+                    f"**{ticker}** doesn't seem to exist. "
+                    "Double-check the spelling and try a real symbol — "
+                    "for example `BTC/USDT`, `ETH/USDT` for crypto, or `AAPL`, `TSLA` for stocks."
+                )
+                return
             except DataFetchError as exc:
                 status.update(label="Data fetch failed", state="error")
                 st.error(f"Could not fetch data for **{ticker}**: {exc}")
@@ -233,8 +247,19 @@ if result is not None:
             unsafe_allow_html=True,
         )
 
+    last_candle_ts = history.index[-1]
+    age = pd.Timestamp.utcnow() - last_candle_ts
+    if age < pd.Timedelta(minutes=90):
+        freshness = "live"
+    elif age < pd.Timedelta(hours=6):
+        freshness = f"{int(age.total_seconds() // 60)} min ago"
+    elif age < pd.Timedelta(days=2):
+        freshness = f"{int(age.total_seconds() // 3600)} h ago"
+    else:
+        freshness = f"{age.days} d ago"
+
     _card(col1, "Current Price", fmt.format(summary["current_price"]),
-          sub=f"{asset_type.capitalize()} · {ticker_label}")
+          sub=f"{asset_type.capitalize()} · {ticker_label} · {freshness}")
     _card(
         col2,
         "Forecast (24h)",
@@ -257,14 +282,9 @@ if result is not None:
     )
 
     if forecast.get("errors"):
-        with st.expander(f"⚠️ {len(forecast['errors'])} sampling path(s) failed"):
+        with st.expander(f"{len(forecast['errors'])} sampling path(s) failed"):
             for err in forecast["errors"][:5]:
                 st.code(err)
-
-    st.caption(
-        "⚠️ Forecasts are AI-generated approximations for educational purposes only. "
-        "Not financial advice."
-    )
 else:
     st.info(
         "Try a crypto pair like `BTC/USDT`, `ETH/USDT`, `SOL/USDT` "

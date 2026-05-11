@@ -2,8 +2,32 @@
 
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
+
+def _detect_gaps(timestamps: pd.DatetimeIndex):
+    """Return a Plotly rangebreaks dict that collapses every gap in `timestamps`
+    (weekends + overnight non-trading hours for stocks, none for 24/7 crypto)."""
+    if len(timestamps) < 3:
+        return None
+    ts = pd.DatetimeIndex(sorted(timestamps))
+    diffs = ts[1:] - ts[:-1]
+    typical = pd.Series(diffs).mode().iloc[0]
+    if typical <= pd.Timedelta(0):
+        return None
+
+    missing = []
+    for i, d in enumerate(diffs):
+        if d > typical * 1.5:
+            chunk = pd.date_range(
+                ts[i] + typical, ts[i + 1], freq=typical, inclusive="left"
+            )
+            missing.extend(chunk)
+    if not missing:
+        return None
+    return dict(values=missing, dvalue=typical.total_seconds() * 1000)
+
 
 HISTORY_COLOR_UP = "#2563eb"   # blue
 HISTORY_COLOR_DOWN = "#1e3a8a"
@@ -109,5 +133,12 @@ def build_forecast_chart(
         hovermode="x unified",
     )
     fig.update_yaxes(title_text="Price", tickformat=",.4f")
-    fig.update_xaxes(title_text="Time (UTC)")
+
+    # Collapse non-trading periods (weekends/overnights for stocks, none for crypto)
+    all_ts = hist.index.append(forecast_mean.index)
+    gap_break = _detect_gaps(all_ts)
+    x_kwargs = {"title_text": "Time (UTC)"}
+    if gap_break is not None:
+        x_kwargs["rangebreaks"] = [gap_break]
+    fig.update_xaxes(**x_kwargs)
     return fig

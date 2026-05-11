@@ -1,13 +1,24 @@
+# CPU-only PyTorch wheels (no CUDA/cuDNN/NCCL ~3GB pull on Linux)
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Web UI
 streamlit==1.39.0
-pandas==2.2.3
-numpy==1.26.4
+
+# Data fetching
 requests==2.32.3
-yfinance==0.2.50
+yfinance==0.2.65
+curl_cffi==0.7.4   # yfinance auto-detects and uses this to bypass Yahoo bot blocks
+
+# Charts
 plotly==5.24.1
-torch==2.4.1
-transformers==4.46.3
+
+# Kronos model runtime
+torch==2.4.1+cpu
 huggingface_hub==0.26.2
 einops==0.8.0
-tqdm==4.66.5
 safetensors==0.4.5
-accelerate==1.1.1
+tqdm==4.66.5
+
+# Numerical / data
+pandas==2.2.3
+numpy==1.26.4
