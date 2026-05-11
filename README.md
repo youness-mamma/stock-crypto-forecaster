@@ -1,6 +1,5 @@
 ---
 title: Kronos AI Candlestick Forecast
-emoji: 📈
 colorFrom: orange
 colorTo: blue
 sdk: streamlit
@@ -12,33 +11,30 @@ license: mit
 
 <div align="center">
 
-# 📈 Kronos AI — Candlestick Forecasting
+# Kronos AI — Candlestick Forecasting
 
-**A Streamlit web app that generates 24-hour AI candlestick forecasts for crypto pairs and stocks,
-powered by the open-source [Kronos](https://github.com/shiyu-coder/Kronos) financial time-series model.**
+**A Streamlit web application that generates 24-hour AI candlestick forecasts for crypto pairs and stocks, powered by the open-source [Kronos](https://github.com/shiyu-coder/Kronos) financial time-series model.**
 
 <br/>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit" />
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch" />
-  <img src="https://img.shields.io/badge/Hugging%20Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Hugging Face" />
-  <img src="https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly" />
-  <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas" />
-  <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy" />
-  <img src="https://img.shields.io/badge/Binance-F0B90B?style=for-the-badge&logo=binance&logoColor=black" alt="Binance API" />
-  <img src="https://img.shields.io/badge/Yahoo%20Finance-6001D2?style=for-the-badge&logo=yahoo&logoColor=white" alt="Yahoo Finance" />
-</p>
-
-<p align="center">
-  <a href="https://github.com/shiyu-coder/Kronos">
-    <img src="https://img.shields.io/badge/Model-Kronos-9333ea?style=for-the-badge" alt="Kronos" />
-  </a>
-  <a href="https://huggingface.co/spaces">
-    <img src="https://img.shields.io/badge/Deploy-Hugging%20Face%20Spaces-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black" alt="Deploy to HF Spaces" />
-  </a>
-  <img src="https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge" alt="MIT License" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/streamlit/streamlit-original.svg" alt="Streamlit" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/plotly/plotly-original.svg" alt="Plotly" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" alt="pandas" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.simpleicons.org/binance/F0B90B" alt="Binance" height="55" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://cdn.simpleicons.org/yahoo/6001D2" alt="Yahoo Finance" height="55" />
 </p>
 
 <br/>
@@ -53,162 +49,143 @@ powered by the open-source [Kronos](https://github.com/shiyu-coder/Kronos) finan
 
 ---
 
-## ✨ Features
+## Overview
 
-- 🔎 **Auto-detection** of asset type from the ticker format.
-- 🪙 **Crypto pairs** (e.g. `BTC/USDT`, `ETH/USDT`) via the **Binance** public REST API — no API key required.
-- 📊 **Stocks** (e.g. `AAPL`, `TSLA`, `NVDA`) via **Yahoo Finance** (`yfinance`).
-- 🧠 **Kronos** financial foundation model, loaded directly from Hugging Face Hub:
-  - Tokenizer → [`NeoQuasar/Kronos-Tokenizer-base`](https://huggingface.co/NeoQuasar/Kronos-Tokenizer-base)
-  - Model → [`NeoQuasar/Kronos-small`](https://huggingface.co/NeoQuasar/Kronos-small)
-- 🎲 **Monte Carlo sampling** (N=20 paths) for probabilistic forecasts and a P10–P90 uncertainty cone.
-- 📈 **Clean Plotly candlestick chart** — last 100 historical candles (blue) + 24 forecast candles (orange) + shaded uncertainty band.
-- 📱 **Mobile-friendly** responsive layout.
-- 🔒 **Built-in rate limit** — 5 free forecasts per user per day, resets at UTC midnight.
-- ☁️ **One-click deploy** to Hugging Face Spaces (Streamlit SDK).
-- 🚫 **No API keys** required from the user.
+Kronos AI Forecasting is a Streamlit web application that lets users enter a ticker symbol — either a crypto pair (`BTC/USDT`, `ETH/USDT`, `SOL/USDT`) or a stock symbol (`AAPL`, `TSLA`, `NVDA`) — and instantly receive a probabilistic 24-hour candlestick forecast. The application auto-detects the asset class, fetches 500 hours of OHLCV history from the appropriate public data source, runs the open-source [Kronos](https://github.com/shiyu-coder/Kronos) financial transformer in Monte Carlo mode, and renders an interactive Plotly chart that shows the predicted candlesticks together with a shaded uncertainty cone.
+
+The entire pipeline runs on CPU, requires no API keys from the user, and deploys to Hugging Face Spaces with one click.
 
 ---
 
-## 🖼️ How it works
+## Features
 
-```
-┌─────────────┐    ┌────────────────┐    ┌────────────────────┐    ┌─────────────────┐
-│   Ticker    │ →  │  Data fetcher  │ →  │  Kronos predictor  │ →  │  Plotly chart   │
-│ BTC/USDT or │    │  Binance / yf  │    │  20 × MC samples   │    │  + uncertainty  │
-│   AAPL …    │    │  500 × 1h OHLC │    │  pred_len = 24     │    │  band + metrics │
-└─────────────┘    └────────────────┘    └────────────────────┘    └─────────────────┘
-```
-
-1. **Input** — user types a ticker and clicks *Generate Forecast*.
-2. **Fetch** — `data_fetcher.py` pulls **500 candles of 1-hour OHLCV** from Binance (crypto) or yfinance (stocks).
-3. **Forecast** — `forecaster.py` clones the Kronos repo if needed, loads tokenizer + model from Hugging Face,
-   and runs **20 independent Monte Carlo paths** of `pred_len=24` candles.
-4. **Aggregate** — paths are combined into a mean OHLC forecast and a 10th–90th percentile band on close price.
-5. **Render** — `chart.py` builds the Plotly candlestick + uncertainty cone, and the UI displays headline metrics.
+- Auto-detection of asset type from the ticker format — no manual selection required.
+- Crypto pairs (`BTC/USDT`, `ETH/USDT`, etc.) via the **Binance** public REST API, no API key required.
+- Stocks (`AAPL`, `TSLA`, `NVDA`, etc.) via **Yahoo Finance** through the `yfinance` package.
+- **Kronos** financial foundation model loaded directly from the Hugging Face Hub:
+  - Tokenizer: [`NeoQuasar/Kronos-Tokenizer-base`](https://huggingface.co/NeoQuasar/Kronos-Tokenizer-base)
+  - Model: [`NeoQuasar/Kronos-small`](https://huggingface.co/NeoQuasar/Kronos-small)
+- Monte Carlo sampling with **N = 20** independent forecast paths to produce probabilistic predictions and a 10th–90th percentile uncertainty band on closing price.
+- Clean, interactive **Plotly** candlestick chart — last 100 historical candles in blue, 24 forecast candles in orange, with the shaded uncertainty cone overlaid.
+- Headline metrics displayed under the chart: current price, forecasted price after 24 hours, direction (up or down), confidence percentage based on path agreement, and a volatility outlook.
+- Mobile-friendly responsive layout.
+- Built-in daily rate limit of 5 forecasts per user, with a clear in-app message when the limit is reached.
+- Zero secrets, zero API keys, zero paid resources — everything runs on the free Hugging Face Spaces CPU tier.
 
 ---
 
-## 📊 Metrics shown
+## How it works
 
-| Metric | Description |
-| --- | --- |
-| **Current price** | Last close from the historical series. |
-| **Forecast (24h)** | Mean predicted close 24 candles ahead, with % change. |
-| **Direction** | Up / down based on mean forecast vs. current price. |
-| **Confidence** | Share of Monte Carlo paths that agree with the predicted direction. |
-| **Volatility outlook** | Average forecasted high–low range relative to current price. |
+1. The user enters a ticker symbol and clicks **Generate Forecast**.
+2. `data_fetcher.py` inspects the ticker format. A pair such as `BTC/USDT` is routed to the Binance `/api/v3/klines` endpoint; a plain symbol such as `AAPL` is routed to `yfinance`. Both return a pandas `DataFrame` of 500 hourly OHLCV rows indexed in UTC.
+3. `forecaster.py` ensures the Kronos repository is cloned locally (cloned once at startup, then re-used), adds it to `sys.path`, and lazily loads the tokenizer and model from the Hugging Face Hub. The model loader is cached with `@st.cache_resource` so the weights load only once per process.
+4. The forecaster runs **20 independent Kronos predictions** of `pred_len = 24` candles each. Every path is a single Monte Carlo sample using the default temperature and top-p settings.
+5. The 20 paths are aggregated into a mean OHLC forecast and a per-step 10th and 90th percentile band on closing price.
+6. `chart.py` builds the Plotly figure: history in blue, forecast in orange, the shaded band drawn behind the forecast candles, and a dotted vertical line at the boundary between observed and predicted data.
+7. `rate_limiter.py` records the successful forecast in a JSON file keyed by the user's session UUID. The counter resets every UTC midnight.
 
 ---
 
-## 📁 Project structure
+## Project structure
 
 ```
 finance-streamlit/
-├── app.py             # Streamlit UI + orchestration
-├── data_fetcher.py    # Binance + yfinance OHLCV fetching
-├── forecaster.py      # Kronos repo bootstrap, model loading, Monte Carlo prediction
-├── chart.py           # Plotly candlestick + uncertainty band
-├── rate_limiter.py    # JSON-backed daily rate limit (5/day/user)
-├── requirements.txt   # Pinned dependencies
-├── README.md          # You are here
-└── Kronos/            # Auto-cloned from github.com/shiyu-coder/Kronos on first run
+├── app.py             Streamlit UI and orchestration
+├── data_fetcher.py    Binance and yfinance OHLCV fetching
+├── forecaster.py      Kronos repo bootstrap, model loading, Monte Carlo prediction
+├── chart.py           Plotly candlestick chart with uncertainty band
+├── rate_limiter.py    JSON-backed daily rate limit (5 per day per user)
+├── requirements.txt   Pinned dependencies
+├── README.md          This file
+├── SysArchitecture.png  System architecture diagram
+└── Kronos/            Cloned at startup from github.com/shiyu-coder/Kronos
 ```
 
-The Kronos repository is cloned at startup into `./Kronos/` and added to `sys.path`,
-so `from model import Kronos, KronosTokenizer, KronosPredictor` works identically on
-local machines and on Hugging Face Spaces.
+The Kronos repository is cloned into `./Kronos/` on first run and added to `sys.path`, so `from model import Kronos, KronosTokenizer, KronosPredictor` works identically on local machines and on Hugging Face Spaces.
 
 ---
 
-## 🚀 Run locally
+## Installation
 
-> Requires **Python 3.10+**.
+> Requires Python 3.10 or newer.
 
 ```bash
-git clone <this-repo>
-cd finance-streamlit
+git clone https://github.com/youness-mamma/stock-crypto-forecaster.git
+cd stock-crypto-forecaster
 
-# Create and activate a virtual environment (recommended)
 python3 -m venv .venv
 source .venv/bin/activate          # macOS / Linux
 # .venv\Scripts\activate           # Windows PowerShell
 
-# Install pinned dependencies
+pip install --upgrade pip
 pip install -r requirements.txt
+```
 
-# Launch the app
+---
+
+## Running locally
+
+```bash
 streamlit run app.py
 ```
 
-Then open <http://localhost:8501>.
+Then open <http://localhost:8501> in your browser.
 
-On **first run** the app will:
+On the first run the application will:
 
-1. Clone the Kronos repo into `./Kronos/` (one-time).
-2. Download tokenizer + model weights from Hugging Face Hub (cached afterwards by `huggingface_hub`).
-3. Load the model on CPU. Thanks to `@st.cache_resource`, this happens only once per process.
+1. Clone the Kronos repository into `./Kronos/` (one-time operation).
+2. Download the tokenizer and model weights from the Hugging Face Hub (cached automatically by `huggingface_hub`).
+3. Load the model onto CPU. Subsequent forecasts in the same session re-use the cached model.
 
-Expect roughly **1–2 minutes per forecast** on a typical free-tier CPU
-(20 Monte Carlo paths × 24-candle horizon).
-
----
-
-## ☁️ Deploy to Hugging Face Spaces
-
-This repo is **Spaces-ready** — the YAML frontmatter at the top of this README declares the Streamlit SDK.
-
-1. Create a new **Space** with the **Streamlit** SDK.
-2. Push all files in this directory to the Space repo (or use the web uploader).
-3. The Space will:
-   - Install dependencies from `requirements.txt`.
-   - Clone the Kronos repo automatically on first request.
-   - Serve `app.py`.
-
-No secrets, environment variables, or API keys are required — Binance's public endpoints and `yfinance` work out of the box, and Hugging Face Hub downloads the model anonymously.
+Expect roughly 1–2 minutes per forecast on a typical free-tier CPU (20 Monte Carlo paths multiplied by a 24-candle horizon).
 
 ---
 
-## 🛡️ Rate limit
+## Deploying to Hugging Face Spaces
 
-| | Value |
-| --- | --- |
-| **Limit** | 5 forecasts / day / user |
-| **Storage** | `.usage.json` keyed by per-session UUID |
-| **Reset** | UTC midnight |
-| **Tracking** | Streamlit session state + atomic JSON write |
+This repository is Spaces-ready — the YAML block at the top of this README declares the Streamlit SDK and the entry-point file.
 
-When the limit is reached the UI shows:
+1. Create a new Space on Hugging Face with the **Streamlit** SDK.
+2. Push every file in this repository to the Space (`git push` to the Space remote, or use the web uploader).
+3. Hugging Face will install dependencies from `requirements.txt`, clone the Kronos repository on first request, and serve `app.py` automatically.
 
-> **You've reached your 5 free forecasts for today. Come back tomorrow!**
+No environment variables, secrets, or API keys are required. Binance public endpoints and `yfinance` work without authentication, and Hugging Face Hub downloads `NeoQuasar/Kronos-Tokenizer-base` and `NeoQuasar/Kronos-small` anonymously.
 
 ---
 
-## 🧰 Tech stack
+## Rate limiting
 
-| Layer | Technology |
-| --- | --- |
-| Web UI | [Streamlit](https://streamlit.io/) |
-| Charting | [Plotly](https://plotly.com/python/) |
-| Model | [Kronos](https://github.com/shiyu-coder/Kronos) (PyTorch) |
-| Model hub | [Hugging Face Hub](https://huggingface.co/) + [`transformers`](https://huggingface.co/docs/transformers) |
-| Crypto data | [Binance public REST API](https://binance-docs.github.io/apidocs/spot/en/#kline-candlestick-data) |
-| Stock data | [yfinance](https://github.com/ranaroussi/yfinance) (Yahoo Finance) |
-| Data ops | [pandas](https://pandas.pydata.org/) · [NumPy](https://numpy.org/) |
-| Deploy target | [Hugging Face Spaces](https://huggingface.co/spaces) (Streamlit SDK) |
+The free tier allows **5 forecasts per user per day**. Usage is tracked in `.usage.json` (a local JSON file) keyed by a per-session UUID stored in Streamlit's `session_state`. The counter resets at UTC midnight every day.
+
+When the daily limit is reached, the application displays:
+
+> *You've reached your 5 free forecasts for today. Come back tomorrow!*
+
+The limit is enforced before the model runs, and the counter is only incremented after a forecast completes successfully — failed runs (invalid ticker, network error, model error) do not consume the user's quota.
 
 ---
 
-## ⚠️ Disclaimer
+## Technology stack
 
-This app is for **educational and research purposes only**. The forecasts are
-AI-generated approximations from a probabilistic model and **are not financial
-advice**. Markets are noisy and any predictive model — Kronos included — can
-and will be wrong. Do not make trading decisions based solely on this output.
+- **[Python 3.10+](https://www.python.org/)** — runtime.
+- **[Streamlit](https://streamlit.io/)** — web UI framework.
+- **[PyTorch](https://pytorch.org/)** — neural network backend that powers the Kronos model.
+- **[Hugging Face Hub](https://huggingface.co/)** and **[Transformers](https://huggingface.co/docs/transformers)** — model and tokenizer hosting and loading.
+- **[Kronos](https://github.com/shiyu-coder/Kronos)** — open-source financial time-series transformer.
+- **[Plotly](https://plotly.com/python/)** — interactive candlestick charts and uncertainty bands.
+- **[pandas](https://pandas.pydata.org/)** and **[NumPy](https://numpy.org/)** — data manipulation and numerical aggregation.
+- **[Binance public REST API](https://binance-docs.github.io/apidocs/spot/en/#kline-candlestick-data)** — crypto OHLCV source.
+- **[yfinance](https://github.com/ranaroussi/yfinance)** (Yahoo Finance) — stock OHLCV source.
+- **[Hugging Face Spaces](https://huggingface.co/spaces)** — deployment target with the Streamlit SDK.
 
 ---
 
-## 📄 License
+## Disclaimer
 
-MIT — see headers in each source file. The Kronos model and tokenizer are
-distributed under their own licenses on Hugging Face.
+This application is intended for **educational and research purposes only**. The forecasts are generated by a probabilistic AI model and are **not financial advice**. Financial markets are noisy and any predictive model — Kronos included — can be wrong, sometimes severely. Do not make trading or investment decisions based solely on the output of this application.
+
+---
+
+## License
+
+This project is released under the MIT license. The Kronos model and tokenizer are distributed under their own licenses on Hugging Face; please consult the model cards on the Hugging Face Hub before using the weights in derivative work.

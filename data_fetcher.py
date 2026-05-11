@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import re
-from datetime import datetime, timedelta, timezone 
+from datetime import datetime, timedelta, timezone  #type: ignore
 
 import pandas as pd #type: ignore
-import requests
+import requests #type: ignore
 import yfinance as yf #type: ignore
 
 BINANCE_KLINES_URL = "https://api.binance.com/api/v3/klines"
