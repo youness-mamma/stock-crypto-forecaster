@@ -33,14 +33,12 @@ license: mit
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" alt="NumPy" height="55" />
   &nbsp;&nbsp;&nbsp;
   <img src="https://cdn.simpleicons.org/binance/F0B90B" alt="Binance" height="55" />
-  &nbsp;&nbsp;&nbsp;
-  <img src="https://cdn.simpleicons.org/yahoo/6001D2" alt="Yahoo Finance" height="55" />
 </p>
 
 <br/>
 
 <p align="center">
-  <img src="./SysArchitecture.png" alt="System architecture diagram" width="900" />
+  <img src="SysArchitecture.png" alt="System architecture diagram" width="900" />
 </p>
 
 <p align="center"><sub><i>System architecture — data sources, model pipeline, and UI layer.</i></sub></p>
