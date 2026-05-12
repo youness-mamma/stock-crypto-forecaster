@@ -1,13 +1,3 @@
----
-title: Kronos AI Candlestick Forecast
-colorFrom: orange
-colorTo: blue
-sdk: docker
-app_port: 7860
-pinned: false
-license: mit
----
-
 <div align="center">
 
 # Kronos AI — Candlestick Forecasting
